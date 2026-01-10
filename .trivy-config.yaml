@@ -1,0 +1,18 @@
+rules:
+  - id: root-user
+    category: Custom
+    title: Container running as root
+    severity: HIGH
+    regex: USER\s+root
+
+  - id: insecure-db
+    category: Custom
+    title: Database SSL disabled
+    severity: HIGH
+    regex: ssl:\s*false
+
+  - id: plaintext-password
+    category: Custom
+    title: Hardcoded password in config
+    severity: HIGH
+    regex: password:\s*["']?.+["']?
