@@ -1,0 +1,80 @@
+# Trigger pipeline on push and pull requests to main and dev branches only
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  trivy-scan:
+    name: Trivy Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository code to the runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install Trivy security scanner from official repository
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy -y
+
+      # Cache Trivy's vulnerability database to speed up subsequent scans
+      - name: Cache Trivy vulnerability database
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/trivy
+          key: ${{ runner.os }}-trivy-db
+          restore-keys: |
+            ${{ runner.os }}-trivy-
+
+      # Install Node.js only if package.json exists (for npm dependency scanning)
+      - name: Setup Node.js
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Prepare files for scanning:
+      # - Remove invalid/empty trivy-secret.yaml config file to prevent errors
+      - name: Prepare dependency files for scanning
+        run: |
+          [ -f trivy-secret.yaml ] && [ ! -s trivy-secret.yaml ] && rm -f trivy-secret.yaml || true
+          if [ -f package.json ]; then
+            npm install --package-lock-only || true
+          fi
+      # Scan for exposed secrets (API keys, passwords, tokens) in all files
+      # Detects secrets in .env files
+      - name: Secret Scan
+        run: |
+          rm -f trivy-secret.yaml
+          trivy fs . \
+            --scanners secret \
+            --severity CRITICAL,HIGH \
+            --format table \
+            --exit-code 1
+
+      # Scan for known vulnerabilities in dependencies (npm, pip, etc.)
+      # Analyzes package-lock.json, requirements.txt, go.mod
+      - name: Vulnerability Scan
+        run: |
+          trivy fs . \
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
+            --exit-code 1
+
+      # Scan for misconfigurations in infrastructure and configuration files
+      # Scans: Dockerfile, Kubernetes manifests, Terraform, CloudFormation, YAML/JSON
+      - name: Misconfiguration Scan
+        run: |
+          trivy fs . \
+            --scanners misconfig \
+            --misconfig-scanners dockerfile,kubernetes,terraform,cloudformation,yaml,json \
+            --severity MEDIUM,HIGH,CRITICAL \
+            --exit-code 1
