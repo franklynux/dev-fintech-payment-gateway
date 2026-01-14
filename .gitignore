@@ -1,0 +1,94 @@
+# Dependencies
+node_modules/
+bower_components/
+jspm_packages/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.test
+*.secret.env
+
+# Build outputs
+dist/
+build/
+coverage/
+.nyc_output/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Docker
+docker-compose.override.yml
+docker-compose.prod.yml
+docker-compose.dev.yml
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+dump.rdb
+
+# Security
+secrets/
+private/
+*.secret
+*.private
+
+# Application specific
+uploads/
+downloads/
+media/
+static/uploads/
+
+# PCI Compliance artifacts
+pci-audit-report-*.pdf
+pci-compliance-scan-*.xml
+security-scan-*.json
+
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+.terraform.lock.hcl

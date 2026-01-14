@@ -1,0 +1,75 @@
+{
+  "id": "evt_test_123456789",
+  "object": "event",
+  "api_version": "2023-10-16",
+  "created": 1678901234,
+  "data": {
+    "object": {
+      "id": "pi_test_123456789",
+      "object": "payment_intent",
+      "amount": 10050,
+      "amount_capturable": 0,
+      "amount_received": 10050,
+      "application": null,
+      "application_fee_amount": null,
+      "automatic_payment_methods": null,
+      "canceled_at": null,
+      "cancellation_reason": null,
+      "capture_method": "automatic",
+      "client_secret": "pi_test_secret_123",
+      "confirmation_method": "automatic",
+      "created": 1678901200,
+      "currency": "usd",
+      "customer": "cus_test_123456789",
+      "description": "Test Payment",
+      "invoice": null,
+      "last_payment_error": null,
+      "livemode": false,
+      "metadata": {
+        "order_id": "order_123",
+        "merchant_id": "merchant_123"
+      },
+      "next_action": null,
+      "on_behalf_of": null,
+      "payment_method": "pm_test_123456789",
+      "payment_method_options": {
+        "card": {
+          "installments": null,
+          "network": null,
+          "request_three_d_secure": "automatic"
+        }
+      },
+      "payment_method_types": ["card"],
+      "processing": null,
+      "receipt_email": "customer@example.com",
+      "review": null,
+      "setup_future_usage": null,
+      "shipping": {
+        "address": {
+          "city": "San Francisco",
+          "country": "US",
+          "line1": "510 Townsend St",
+          "line2": null,
+          "postal_code": "94103",
+          "state": "CA"
+        },
+        "carrier": null,
+        "name": "Jenny Rosen",
+        "phone": null,
+        "tracking_number": null
+      },
+      "statement_descriptor": "EXAMPLE.COM",
+      "statement_descriptor_suffix": null,
+      "status": "succeeded",
+      "transfer_data": null,
+      "transfer_group": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_test_123456789",
+    "idempotency_key": "idemp_test_123456789"
+  },
+  "type": "payment_intent.succeeded"
+}

@@ -1,16 +1,18 @@
-const express = require("express");
-const app = express();
+const { startServer } = require('./src/app.js');
 
-const PORT = process.env.PORT || 8080;
+async function bootstrap() {
+  try {
+    console.log('🚀 Booting Payment Gateway Proxy...');
+    await startServer();
+  } catch (error) {
+    console.error('Failed to bootstrap application:', error);
+    process.exit(1);
+  }
+}
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
+// Only run if this is the main module
+if (require.main === module) {
+  bootstrap();
+}
 
-app.get("/", (req, res) => {
-  res.json({ message: "Payment Gateway Proxy running" });
-});
-
-app.listen(PORT, () => {
-  console.log(`Payment Gateway Proxy listening on port ${PORT}`);
-});
+module.exports = bootstrap;
