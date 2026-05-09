@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Fintech-Payment-Gateway-Proxy
 
 ## Specification
@@ -200,3 +201,6 @@ This project includes a GitHub Actions workflow for automated security scanning 
 - If any secrets, vulnerabilities, or misconfigurations are detected at the configured severity levels, the workflow fails and prevents merging until issues are addressed.
 - This ensures that code merged into the repository meets security standards and reduces the risk of introducing vulnerabilities.
 
+=======
+# dev-fintech-payment-gateway
+>>>>>>> b45de315795a03c818ef5e4eb881c131a572ecef
